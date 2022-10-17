@@ -27,6 +27,5 @@ export default function useCurrencies() {
   } else {
     currency = JSON.parse(localStorageCurrency);
   }
-  console.log(currency);
   return currency;
 }

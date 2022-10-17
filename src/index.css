@@ -38,3 +38,11 @@
     transform: rotate(360deg);
   }
 }
+
+.apexcharts-menu {
+  background-color: #27293d !important;
+}
+.apexcharts-menu-item:hover {
+  background-color: rgba(117, 239, 255, 50) !important;
+  color: rgb(16 28 49) !important;
+}

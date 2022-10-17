@@ -5,16 +5,10 @@ import { abbreviateNumber } from '../../utils/millionBillionConverter';
 import { precisionRound } from '../../utils/PrecisionRound';
 const ValueStatics = ({ coin }) => {
   const { symbol: currSymbol, sign } = useSelector((state) => state.currencies);
-  console.log(coin);
   const {
     name,
-    iconUrl,
-    numberOfExchanges,
     price,
     rank,
-    symbol,
-    numberOfMarkets,
-    change,
     btcPrice,
     marketCap,
     fullyDilutedMarketCap,
@@ -44,7 +38,7 @@ const ValueStatics = ({ coin }) => {
             </h2>
           </div>
           <div className="border-b border-brand/50 flex justify-between items-center py-3">
-            <p className="text-lg">Rank{currSymbol}</p>
+            <p className="text-lg">Rank</p>
             <h2 className="text-xl font-bold">{rank}</h2>
           </div>
           <div className="border-b border-brand/50 flex justify-between items-center py-3">

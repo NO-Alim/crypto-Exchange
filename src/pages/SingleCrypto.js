@@ -1,10 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Calculator from '../component/SingleCrypto/Calculator';
+import CryptoExchange from '../component/SingleCrypto/CryptoExchange';
+import CryptoMarkets from '../component/SingleCrypto/CryptoMarkets';
+import Links from '../component/SingleCrypto/Links';
 import PriceChart from '../component/SingleCrypto/PriceChart';
 import SingleCryptoHeader from '../component/SingleCrypto/SingleCryptoHeader';
 import SupplyInformation from '../component/SingleCrypto/SupplyInformation';
 import ValueStatics from '../component/SingleCrypto/ValueStatics';
+import LoaderSpin from '../component/ui/LoaderSpin';
 import { useGetCryptoDetailsQuery } from '../features/coinRanking/coinRankingApi';
 const SingleCrypto = () => {
   const { uuid, sign, symbol } = useSelector((state) => state.currencies);
@@ -20,10 +25,7 @@ const SingleCrypto = () => {
   if (isLoading)
     content = (
       <div className="w-full h-screen flex items-center justify-center">
-        <span className="flex items-center justify-center  relative w-20 h-20 rounded-full">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span className="inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-        </span>
+        <LoaderSpin />
       </div>
     );
 
@@ -43,6 +45,18 @@ const SingleCrypto = () => {
           </div>
           <div className="col-span-1">
             <SupplyInformation coin={coin} />
+          </div>
+          <div className="col-span-1">
+            <CryptoExchange coin={coin} />
+          </div>
+          <div className="col-span-1">
+            <CryptoMarkets coin={coin} />
+          </div>
+          <div className="col-span-1">
+            <Calculator />
+          </div>
+          <div className="col-span-1">
+            <Links coin={coin} />
           </div>
         </div>
       </div>

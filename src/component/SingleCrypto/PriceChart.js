@@ -1,4 +1,4 @@
-import moment from 'moment/moment';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ const PriceChart = ({ coin }) => {
     (state) => state.currencies
   );
   const { uuid } = coin;
-  const timePeriod = '24h';
+  const timePeriod = '7d';
 
   const {
     data: fetchedHistory,
@@ -33,6 +33,7 @@ const PriceChart = ({ coin }) => {
       data: coinPrice,
     },
   ];
+
   const options = {
     chart: {
       type: 'area',
@@ -54,8 +55,11 @@ const PriceChart = ({ coin }) => {
       size: 0,
     },
     title: {
-      text: 'Stock Price Movement',
+      text: `Price Movement of ${timePeriod}`,
       align: 'left',
+      style: {
+        color: '#fff',
+      },
     },
     fill: {
       type: 'gradient',
@@ -73,17 +77,26 @@ const PriceChart = ({ coin }) => {
       },
       title: {
         text: 'price',
+        style: {
+          color: '#fff',
+        },
       },
     },
     xaxis: {
-      labels: {
-        formatter: function (coinTimestamp) {
-          return moment.unix(coinTimestamp).format('LT');
-        },
-      },
+      categories: coinTimestamp,
       title: {
         text: 'timestamp',
+        style: {
+          color: '#fff',
+        },
       },
+      labels: {
+        enabled: false,
+      },
+    },
+    tooltip: {
+      enabled: true,
+      theme: 'dark',
     },
   };
 
@@ -93,14 +106,15 @@ const PriceChart = ({ coin }) => {
         return precisionRound(Number(item.price), 2);
       });
       let timestamp = fetchedHistory.data.history.map((item) => {
-        return item.timestamp;
+        let convertToTime =
+          moment.unix(item.timestamp).format('LL') +
+          ' ' +
+          moment.unix(item.timestamp).format('LT');
+        return convertToTime;
       });
       setCoinPrice(prices);
-      setCoinTimestamp(timestamp);
+      setCoinTimestamp(timestamp.reverse());
     }
-    coinTimestamp.map((item) => {
-      console.log(moment.unix(item).format('LT'));
-    });
   }, [fetchedHistory]);
 
   let content;
@@ -128,19 +142,7 @@ const PriceChart = ({ coin }) => {
     );
   }
 
-  return (
-    <div className="section py-0">
-      <div className="border-b border-brand/50 py-3">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-5 items-center">
-            <h2 className="text-xl font-semibold">Price Chart</h2>
-          </div>
-          <div>hello</div>
-        </div>
-      </div>
-      {content}
-    </div>
-  );
+  return <div className="section py-10">{content}</div>;
 };
 
 export default PriceChart;

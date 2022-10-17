@@ -35,6 +35,21 @@ export const coinRankingApi = createApi({
           `coin/${coinId}/history?referenceCurrencyUuid=${referenceCurrencyUuid}&timePeriod=${timePeriod}`
         ),
     }),
+    //https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd/exchanges
+
+    getCryptoExchanges: builder.query({
+      query: ({ coinId, referenceCurrencyUuid, limit }) =>
+        createRequest(
+          `coin/${coinId}/exchanges?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${limit}`
+        ),
+    }),
+    //https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd/markets
+    getCryptoMarkets: builder.query({
+      query: ({ coinId, referenceCurrencyUuid, limit }) =>
+        createRequest(
+          `coin/${coinId}/markets?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${limit}`
+        ),
+    }),
   }),
 });
 
@@ -43,4 +58,6 @@ export const {
   useGetReferenceCurrenciesQuery,
   useGetCryptoDetailsQuery,
   useGetCryptoHistoryQuery,
+  useGetCryptoExchangesQuery,
+  useGetCryptoMarketsQuery,
 } = coinRankingApi;
