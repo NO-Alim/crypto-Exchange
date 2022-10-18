@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import useCurrencies from '../../hooks/useCureencies';
-import SelectOption from '../ui/SelectOption';
+import CalculatorInputSelectOptions from '../ui/CalculatorInputSelectOptions';
 
 const Calculator = () => {
   const currency = useCurrencies();
   const [currencies, setCurrencies] = useState([currency]);
   const [selectedOption, setSelectedOption] = useState(currency);
   const [inputValueOne, setInputValueOne] = useState(1);
-  const [resultValue, setResultValue] = useState()
+  const [resultValue, setResultValue] = useState();
   const handleSelect = (e) => {
     setSelectedOption(e);
   };
@@ -27,10 +27,13 @@ const Calculator = () => {
               value="1"
               className="col-span-2 bg-transparent focus:outline-none hover:outline-none px-3"
             />
-            <SelectOption
+            <CalculatorInputSelectOptions
               options={currencies}
               placeholder="Team"
               value={selectedOption}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
               onChange={(e) => handleSelect(e)}
               required
             />
@@ -41,10 +44,13 @@ const Calculator = () => {
               value="1"
               className="col-span-2 bg-transparent focus:outline-none hover:outline-none px-3"
             />
-            <SelectOption
+            <CalculatorInputSelectOptions
               options={currencies}
               placeholder="Team"
               value={selectedOption}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
               onChange={(e) => handleSelect(e)}
               required
             />

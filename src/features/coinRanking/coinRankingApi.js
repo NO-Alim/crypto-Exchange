@@ -16,13 +16,13 @@ export const coinRankingApi = createApi({
     getCryptos: builder.query({
       query: ({ cryptoCount, referenceCurrencyUuid }) =>
         createRequest(
-          `/coins?referenceCurrency=${referenceCurrencyUuid}&limit=${cryptoCount}`
+          `/coins?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${cryptoCount}`
         ),
     }),
     getCryptoDetails: builder.query({
       query: ({ coinId, referenceCurrencyUuid }) =>
         createRequest(
-          `/coin/${coinId}?referenceCurrency=${referenceCurrencyUuid}`
+          `/coin/${coinId}?referenceCurrencyUuid=${referenceCurrencyUuid}`
         ),
     }),
     getReferenceCurrencies: builder.query({
@@ -35,19 +35,23 @@ export const coinRankingApi = createApi({
           `coin/${coinId}/history?referenceCurrencyUuid=${referenceCurrencyUuid}&timePeriod=${timePeriod}`
         ),
     }),
-    //https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd/exchanges
-
     getCryptoExchanges: builder.query({
       query: ({ coinId, referenceCurrencyUuid, limit }) =>
         createRequest(
           `coin/${coinId}/exchanges?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${limit}`
         ),
     }),
-    //https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd/markets
     getCryptoMarkets: builder.query({
       query: ({ coinId, referenceCurrencyUuid, limit }) =>
         createRequest(
           `coin/${coinId}/markets?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${limit}`
+        ),
+    }),
+    getCryptoPriceCalculate: builder.query({
+      query: ({ uuid, referenceCurrencyUuid, timeStamp }) =>
+        createRequest(
+          //https://coinranking1.p.rapidapi.com/coin/yhjMzLPhuIDl/price?referenceCurrencyUuid=yhjMzLPhuIDl
+          `coin/${uuid}/price?referenceCurrencyUuid=${referenceCurrencyUuid}&timestamp=${timeStamp}`
         ),
     }),
   }),
@@ -60,4 +64,5 @@ export const {
   useGetCryptoHistoryQuery,
   useGetCryptoExchangesQuery,
   useGetCryptoMarketsQuery,
+  useGetCryptoPriceCalculateQuery,
 } = coinRankingApi;
