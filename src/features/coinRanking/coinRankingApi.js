@@ -50,7 +50,6 @@ export const coinRankingApi = createApi({
     getCryptoPriceCalculate: builder.query({
       query: ({ uuid, referenceCurrencyUuid, timeStamp }) =>
         createRequest(
-          //https://coinranking1.p.rapidapi.com/coin/yhjMzLPhuIDl/price?referenceCurrencyUuid=yhjMzLPhuIDl
           `coin/${uuid}/price?referenceCurrencyUuid=${referenceCurrencyUuid}&timestamp=${timeStamp}`
         ),
     }),

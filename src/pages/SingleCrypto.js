@@ -53,7 +53,7 @@ const SingleCrypto = () => {
             <CryptoMarkets coin={coin} />
           </div>
           <div className="col-span-1">
-            <Calculator />
+            <Calculator coin={coin} />
           </div>
           <div className="col-span-1">
             <Links coin={coin} />
