@@ -1,7 +1,17 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { useGetCryptoPriceCalculateQuery } from '../features/coinRanking/coinRankingApi';
 
 const CalculatorModal = ({ open, control }) => {
+  const { data, isLoading, isError } = useGetCryptoPriceCalculateQuery({
+    uuid: 'yhjMzLPhuIDl',
+    referenceCurrencyUuid: 'yhjMzLPhuIDl',
+    timeStamp: '1666110260',
+  });
+
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
   return (
     open && (
       <>

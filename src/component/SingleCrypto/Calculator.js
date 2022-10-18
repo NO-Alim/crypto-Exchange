@@ -9,7 +9,6 @@ import CalculatorInputSelectOptions from '../ui/CalculatorInputSelectOptions';
 const Calculator = ({ coin }) => {
   const { uuid, symbol, name } = coin;
   const currency = useCurrencies();
-  const timeStamp = new Date().getTime() / 1000;
 
   const { data: referenceCurrencies } = useGetReferenceCurrenciesQuery(10);
 
@@ -23,20 +22,24 @@ const Calculator = ({ coin }) => {
     },
     label: symbol + '-' + name,
   });
+
   const [resultSelectedOption, setResultSelectedOption] = useState(currency);
+  const [coinUuid, setCoinUuid] = useState(uuid);
+
   //input
   const [inputValue, setInputValue] = useState(1);
   const [resultValue, setResultValue] = useState(1);
+  const [result, setResult] = useState(true);
 
   //get calculate
-  const { data: calculateData } = useGetCryptoPriceCalculateQuery({
-    uuid: inputSelectedOption.value.uuid,
+  const { data: calculateData, isLoading } = useGetCryptoPriceCalculateQuery({
+    uuid: coinUuid,
     referenceCurrencyUuid: resultSelectedOption.value.uuid,
-    timeStamp,
   });
 
   const inputHandleSelect = (e) => {
     setInputSelectedOption(e);
+    setCoinUuid(e.value.uuid);
   };
   const resultHandleSelect = (e) => {
     setResultSelectedOption(e);
@@ -58,8 +61,14 @@ const Calculator = ({ coin }) => {
   }, [referenceCurrencies]);
 
   useEffect(() => {
-    console.log(calculateData);
-  }, [calculateData]);
+    if (calculateData?.data?.price) {
+      if (result) {
+        setResultValue(inputValue * calculateData.data.price);
+      } else {
+        setInputValue(resultValue / calculateData.data.price);
+      }
+    }
+  }, [calculateData, result, inputValue, resultValue, isLoading]);
 
   return (
     <div>
@@ -74,9 +83,22 @@ const Calculator = ({ coin }) => {
             <input
               type="number"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="col-span-2 bg-transparent focus:outline-none hover:outline-none px-3"
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setResult(true);
+              }}
+              placeholder="Input"
+              className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
+                !result ? (isLoading ? 'hidden' : '') : null
+              }`}
             />
+            <div
+              className={`col-span-2 h-full items-center pl-3 ${
+                !result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
+              }`}
+            >
+              <span className="">Loading...</span>
+            </div>
             <CalculatorInputSelectOptions
               options={currencies}
               placeholder="Input"
@@ -93,9 +115,21 @@ const Calculator = ({ coin }) => {
               type="number"
               placeholder="result"
               value={resultValue}
-              onChange={(e) => setResultValue(e.target.value)}
-              className="col-span-2 bg-transparent focus:outline-none hover:outline-none px-3"
+              onChange={(e) => {
+                setResultValue(e.target.value);
+                setResult(false);
+              }}
+              className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
+                result ? (isLoading ? 'hidden' : '') : ''
+              }`}
             />
+            <div
+              className={`col-span-2 h-full items-center pl-3 ${
+                result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
+              }`}
+            >
+              <span className="">Loading...</span>
+            </div>
             <CalculatorInputSelectOptions
               options={currencies}
               placeholder="Result"

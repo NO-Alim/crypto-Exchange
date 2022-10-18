@@ -48,9 +48,9 @@ export const coinRankingApi = createApi({
         ),
     }),
     getCryptoPriceCalculate: builder.query({
-      query: ({ uuid, referenceCurrencyUuid, timeStamp }) =>
+      query: ({ uuid, referenceCurrencyUuid }) =>
         createRequest(
-          `coin/${uuid}/price?referenceCurrencyUuid=${referenceCurrencyUuid}&timestamp=${timeStamp}`
+          `coin/${uuid}/price?referenceCurrencyUuid=${referenceCurrencyUuid}`
         ),
     }),
   }),
