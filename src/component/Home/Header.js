@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useGetCryptosQuery } from '../../features/coinRanking/coinRankingApi';
 import { abbreviateNumber } from '../../utils//millionBillionConverter';
+import Error from '../ui/Error';
 import Loader from '../ui/Loader';
 
 const Header = () => {
@@ -15,14 +16,14 @@ const Header = () => {
   let content;
   if (isLoading)
     content = (
-      <div className="grid grid-cols-2 sm:grid-cols-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
         <Loader />
         <Loader />
         <Loader />
       </div>
     );
-  if (isError) content = <h1>Something Wrong</h1>;
-  //!isLoading && !isError && data?.data?.stats
+  if (!isLoading && isError) content = <Error message={error.error} />;
+
   if (!isLoading && !isError && data?.data?.stats) {
     const globalStats = data.data.stats;
     content = (

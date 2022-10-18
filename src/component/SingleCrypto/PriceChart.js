@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 import { useGetCryptoHistoryQuery } from '../../features/coinRanking/coinRankingApi';
 import { precisionRound } from '../../utils/PrecisionRound';
+import Error from '../ui/Error';
 import LoaderSpin from '../ui/LoaderSpin';
 const PriceChart = ({ coin }) => {
   const { uuid: referenceCurrencyUuid } = useSelector(
@@ -128,7 +129,7 @@ const PriceChart = ({ coin }) => {
   }
 
   if (!isLoading && isError) {
-    content = <h2>Some Thing wrong!</h2>;
+    content = <Error message={error.data} />;
   }
 
   if (!isLoading && !isError && fetchedHistory?.data?.history?.length > 0) {

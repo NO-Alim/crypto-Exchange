@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { useGetCryptoPriceCalculateQuery } from '../features/coinRanking/coinRankingApi';
+import CalculatorForm from './CalculatorForm';
 
 const CalculatorModal = ({ open, control }) => {
-  const { data, isLoading, isError } = useGetCryptoPriceCalculateQuery({
-    uuid: 'yhjMzLPhuIDl',
-    referenceCurrencyUuid: 'yhjMzLPhuIDl',
-    timeStamp: '1666110260',
-  });
+  const coin = {
+    uuid: 'Qwsogvtv82FCd',
+    symbol: 'BTC',
+    name: 'Bitcoin',
+  };
 
   // useEffect(() => {
   //   console.log(data);
@@ -17,22 +17,22 @@ const CalculatorModal = ({ open, control }) => {
       <>
         <div
           onClick={control}
-          className="fixed w-full h-full inset-0 z-10 bg-black/50 cursor-pointer"
+          className="fixed w-full h-full inset-0 z-10 bg-stone-50/70 cursor-pointer"
         ></div>
-        <div className="rounded w-[400px] lg:w-[600px] space-y-8 bg-white absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+        <div className="rounded w-[400px] lg:w-[600px] space-y-8 bg-background absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
           <div className="p-10 relative">
             <div
-              className="absolute right-0 top-0 w-5 h-5 rounded-full bg-background flex items-center justify-center cursor-pointer m-2"
+              className="absolute right-0 top-0 w-5 h-5 rounded-full bg-textPrimary text-background flex items-center justify-center cursor-pointer m-2"
               onClick={control}
             >
               <i className="text-sm">
                 <FaTimes />
               </i>
             </div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-textPrimary mb-5">
               Calculator
             </h2>
-            <form className="mt-8 space-y-6">
+            {/* <form className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                   <label htmlFor="to" className="sr-only">
@@ -58,7 +58,8 @@ const CalculatorModal = ({ open, control }) => {
                   Add Category
                 </button>
               </div>
-            </form>
+            </form> */}
+            <CalculatorForm coin={coin} />
           </div>
         </div>
       </>

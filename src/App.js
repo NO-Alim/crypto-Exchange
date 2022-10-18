@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Footer from './component/Footer';
 import Navbar from './component/Navbar';
 import Exchanges from './pages/Exchanges';
 import Home from './pages/Home';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/crypto/:cryptoId" element={<SingleCrypto />} />
         <Route path="/news/:newsId" element={<SingleNews />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
