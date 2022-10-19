@@ -30,7 +30,7 @@ const TenCryptoNewses = () => {
   if (data?.value?.length > 0) {
     const newses = data.value;
     content = (
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4  gap-5">
         {newses.map((item, ind) => {
           return <NewsCart item={item} key={ind} />;
         })}

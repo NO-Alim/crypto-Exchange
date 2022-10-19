@@ -5,12 +5,17 @@ import {
 } from '.././features/coinRanking/coinRankingApi';
 import useCurrencies from '.././hooks/useCureencies';
 import CalculatorInputSelectOptions from './ui/CalculatorInputSelectOptions';
+import Error from './ui/Error';
 
 const CalculatorForm = ({ coin }) => {
   const { uuid, symbol, name } = coin;
   const currency = useCurrencies();
 
-  const { data: referenceCurrencies } = useGetReferenceCurrenciesQuery(10);
+  const {
+    data: referenceCurrencies,
+    isError,
+    error,
+  } = useGetReferenceCurrenciesQuery(10);
 
   //for react-select
   const [currencies, setCurrencies] = useState([currency]);
@@ -69,71 +74,77 @@ const CalculatorForm = ({ coin }) => {
       }
     }
   }, [calculateData, result, inputValue, resultValue, isLoading]);
+
+  if (!isLoading && isError) {
+    return <Error message={error.error} />;
+  }
   return (
-    <form className="flex flex-col gap-5 w-full">
-      <div className="grid grid-cols-3 border border-brand rounded">
-        <input
-          type="number"
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            setResult(true);
-          }}
-          placeholder="Input"
-          className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
-            !result ? (isLoading ? 'hidden' : '') : null
-          }`}
-        />
-        <div
-          className={`col-span-2 h-full items-center pl-3 ${
-            !result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
-          }`}
-        >
-          <span className="">Loading...</span>
+    !isError && (
+      <form className="flex flex-col gap-5 w-full">
+        <div className="grid grid-cols-3 border border-brand rounded">
+          <input
+            type="number"
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              setResult(true);
+            }}
+            placeholder="Input"
+            className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
+              !result ? (isLoading ? 'hidden' : '') : null
+            }`}
+          />
+          <div
+            className={`col-span-2 h-full items-center pl-3 ${
+              !result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
+            }`}
+          >
+            <span className="">Loading...</span>
+          </div>
+          <CalculatorInputSelectOptions
+            options={currencies}
+            placeholder="Input"
+            value={inputSelectedOption}
+            components={{
+              IndicatorSeparator: () => null,
+            }}
+            onChange={(e) => inputHandleSelect(e)}
+            required
+          />
         </div>
-        <CalculatorInputSelectOptions
-          options={currencies}
-          placeholder="Input"
-          value={inputSelectedOption}
-          components={{
-            IndicatorSeparator: () => null,
-          }}
-          onChange={(e) => inputHandleSelect(e)}
-          required
-        />
-      </div>
-      <div className="grid grid-cols-3 border border-brand rounded">
-        <input
-          type="number"
-          placeholder="result"
-          value={resultValue}
-          onChange={(e) => {
-            setResultValue(e.target.value);
-            setResult(false);
-          }}
-          className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
-            result ? (isLoading ? 'hidden' : '') : ''
-          }`}
-        />
-        <div
-          className={`col-span-2 h-full items-center pl-3 ${
-            result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
-          }`}
-        >
-          <span className="">Loading...</span>
+        <div className="grid grid-cols-3 border border-brand rounded">
+          <input
+            type="number"
+            placeholder="result"
+            value={resultValue}
+            onChange={(e) => {
+              setResultValue(e.target.value);
+              setResult(false);
+            }}
+            className={`col-span-2 bg-transparent focus:outline-none hover:outline-none px-3 ${
+              result ? (isLoading ? 'hidden' : '') : ''
+            }`}
+          />
+          <div
+            className={`col-span-2 h-full items-center pl-3 ${
+              result ? (isLoading ? 'flex' : 'hidden') : 'hidden'
+            }`}
+          >
+            <span className="">Loading...</span>
+          </div>
+          <CalculatorInputSelectOptions
+            options={currencies}
+            placeholder="Result"
+            components={{
+              IndicatorSeparator: () => null,
+            }}
+            value={resultSelectedOption}
+            onChange={(e) => resultHandleSelect(e)}
+            required
+          />
         </div>
-        <CalculatorInputSelectOptions
-          options={currencies}
-          placeholder="Result"
-          components={{
-            IndicatorSeparator: () => null,
-          }}
-          value={resultSelectedOption}
-          onChange={(e) => resultHandleSelect(e)}
-          required
-        />
-      </div>
-    </form>
+      </form>
+    )
   );
 };
 

@@ -9,9 +9,6 @@ const CalculatorModal = ({ open, control }) => {
     name: 'Bitcoin',
   };
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
   return (
     open && (
       <>

@@ -31,7 +31,7 @@ const SingleCrypto = () => {
     );
 
   if (!isLoading && isError) {
-    content = <Error message={error.data} />;
+    content = <Error message={error.error} />;
   }
 
   if (!isLoading && !isError && data?.data?.coin) {

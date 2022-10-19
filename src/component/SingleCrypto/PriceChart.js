@@ -7,11 +7,11 @@ import { precisionRound } from '../../utils/PrecisionRound';
 import Error from '../ui/Error';
 import LoaderSpin from '../ui/LoaderSpin';
 const PriceChart = ({ coin }) => {
-  const { uuid: referenceCurrencyUuid } = useSelector(
+  const { uuid: referenceCurrencyUuid, sign } = useSelector(
     (state) => state.currencies
   );
   const { uuid } = coin;
-  const timePeriod = '7d';
+  const [timePeriod, setTimePeriod] = useState('7d');
 
   const {
     data: fetchedHistory,
@@ -23,6 +23,8 @@ const PriceChart = ({ coin }) => {
     timePeriod: timePeriod,
     referenceCurrencyUuid: referenceCurrencyUuid,
   });
+
+  const timeArr = ['3h', '24h', '7d', '30d', '3m', '1y', '3y', '5y'];
 
   //for line chart
   const [coinPrice, setCoinPrice] = useState([]);
@@ -56,7 +58,7 @@ const PriceChart = ({ coin }) => {
       size: 0,
     },
     title: {
-      text: `Price Movement of ${timePeriod}`,
+      text: `Price Movement`,
       align: 'left',
       style: {
         color: '#fff',
@@ -77,7 +79,7 @@ const PriceChart = ({ coin }) => {
         coinPrice,
       },
       title: {
-        text: 'price',
+        text: `price`,
         style: {
           color: '#fff',
         },
@@ -93,6 +95,9 @@ const PriceChart = ({ coin }) => {
       },
       labels: {
         enabled: false,
+        style: {
+          display: 'none',
+        },
       },
     },
     tooltip: {
@@ -143,7 +148,29 @@ const PriceChart = ({ coin }) => {
     );
   }
 
-  return <div className="section py-10">{content}</div>;
+  return (
+    <div className="section py-10">
+      <div className="pl-3 mb-5 flex items-center gap-5">
+        <h2 className="text-lg font-semibold">Select Time Period</h2>
+        <>
+          {timeArr.map((item) => {
+            return (
+              <div
+                className={`px-2  text-background rounded cursor-pointer ${
+                  item === timePeriod ? 'bg-brand' : 'bg-brand/70'
+                }`}
+                key={item}
+                onClick={() => setTimePeriod(item)}
+              >
+                {item}
+              </div>
+            );
+          })}
+        </>
+      </div>
+      <div>{content}</div>
+    </div>
+  );
 };
 
 export default PriceChart;
