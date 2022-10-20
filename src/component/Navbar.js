@@ -119,6 +119,7 @@ const Navbar = () => {
     };
   });
 
+  //when width > 768 set drawer close
   useEffect(() => {
     mediumWidthDrawerControll();
 

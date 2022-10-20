@@ -106,6 +106,7 @@ const PriceChart = ({ coin }) => {
     },
   };
 
+  //setting price and timestamp for chart x-axis and y-axis
   useEffect(() => {
     if (fetchedHistory?.data?.history) {
       let prices = fetchedHistory.data.history.map((item) => {

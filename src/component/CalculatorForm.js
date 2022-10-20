@@ -11,6 +11,7 @@ const CalculatorForm = ({ coin }) => {
   const { uuid, symbol, name } = coin;
   const currency = useCurrencies();
 
+  //all reference currencies
   const {
     data: referenceCurrencies,
     isError,
@@ -42,10 +43,13 @@ const CalculatorForm = ({ coin }) => {
     referenceCurrencyUuid: resultSelectedOption.value.uuid,
   });
 
+  //for input(top input) value
   const inputHandleSelect = (e) => {
     setInputSelectedOption(e);
     setCoinUuid(e.value.uuid);
   };
+
+  //for result(bottom input) value
   const resultHandleSelect = (e) => {
     setResultSelectedOption(e);
   };
@@ -65,6 +69,7 @@ const CalculatorForm = ({ coin }) => {
     }
   }, [referenceCurrencies]);
 
+  //set input or result input
   useEffect(() => {
     if (calculateData?.data?.price) {
       if (result) {

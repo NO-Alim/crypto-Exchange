@@ -3,12 +3,14 @@ import { FaTimes } from 'react-icons/fa';
 import CalculatorForm from './CalculatorForm';
 
 const CalculatorModal = ({ open, control }) => {
+  //default currency Bitcoin
   const coin = {
     uuid: 'Qwsogvtv82FCd',
     symbol: 'BTC',
     name: 'Bitcoin',
   };
 
+  //when modal open set body scroll none
   useEffect(() => {
     const func = () => {
       if (open) {
