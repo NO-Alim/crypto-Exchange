@@ -150,7 +150,7 @@ const PriceChart = ({ coin }) => {
 
   return (
     <div className="section py-10">
-      <div className="pl-3 mb-5 flex items-center gap-5">
+      <div className="pl-3 mb-5 flex flex-wrap items-center gap-5">
         <h2 className="text-lg font-semibold">Select Time Period</h2>
         <>
           {timeArr.map((item) => {
