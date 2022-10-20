@@ -8,7 +8,10 @@ export const store = configureStore({
     [cryptoNewsApi.reducerPath]: cryptoNewsApi.reducer,
     currencies: currenciesReducer,
   },
-  //devTools: process.env.NODE_ENV !== 'production',
-  // middleware: (getDefaultMiddlewares) =>
-  //   getDefaultMiddlewares().concat(apiSlice.middleware),
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddlewares) =>
+    getDefaultMiddlewares().concat(
+      coinRankingApi.middleware,
+      cryptoNewsApi.middleware
+    ),
 });
