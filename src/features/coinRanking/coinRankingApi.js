@@ -14,9 +14,11 @@ export const coinRankingApi = createApi({
   }),
   endpoints: (builder) => ({
     getCryptos: builder.query({
-      query: ({ cryptoCount, referenceCurrencyUuid }) =>
+      query: ({ cryptoCount, referenceCurrencyUuid, query }) =>
         createRequest(
-          `/coins?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${cryptoCount}`
+          `/coins?referenceCurrencyUuid=${referenceCurrencyUuid}&limit=${cryptoCount}${
+            query && '&search=' + query
+          }`
         ),
     }),
     getCryptoDetails: builder.query({

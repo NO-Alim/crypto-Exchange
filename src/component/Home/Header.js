@@ -11,6 +11,7 @@ const Header = () => {
   const { data, isLoading, isError, error } = useGetCryptosQuery({
     cryptoCount,
     referenceCurrencyUuid: uuid,
+    query: '',
   });
 
   let content;

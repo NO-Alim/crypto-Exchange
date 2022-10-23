@@ -12,6 +12,7 @@ const TenCryptos = () => {
   const { data, isLoading, isError, error } = useGetCryptosQuery({
     cryptoCount,
     referenceCurrencyUuid: uuid,
+    query: '',
   });
   let content;
   if (isLoading)
