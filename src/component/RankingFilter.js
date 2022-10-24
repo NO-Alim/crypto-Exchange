@@ -17,7 +17,7 @@ const RankingFilter = () => {
     dispatch(rankingFilter(''));
   };
   return (
-    <div className="mb-10 w-full flex justify-between items-center">
+    <div className="mb-10 w-full flex flex-wrap gap-5 justify-between items-center">
       <form
         className="flex items-center border border-brand rounded bg-textPrimary px-2"
         onSubmit={handleSubmit}
