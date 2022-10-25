@@ -13,6 +13,7 @@ const Ranking = () => {
   const { rankingQuery } = useSelector((state) => state.filter);
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(cryptoCount * page);
+  const [totalPage, setTotalPage] = useState(0);
 
   const { data, isLoading, isError, error } = useGetCryptosQuery({
     cryptoCount,
@@ -31,6 +32,7 @@ const Ranking = () => {
     if (data) {
       const totalCount = data?.data?.stats?.totalCoins || cryptoCount;
       const paginatePage = Math.ceil(totalCount / cryptoCount);
+      setTotalPage(paginatePage);
     }
   }, [data, cryptoCount]);
 
@@ -85,7 +87,7 @@ const Ranking = () => {
       <div className="scrollbar-hide">{content}</div>
       <div className="flex items-center justify-center pt-10">
         <Pagination
-          totalPage={15}
+          totalPage={totalPage}
           handlePageChange={handlePageChange}
           page={page}
           loading={isLoading}
