@@ -12,21 +12,35 @@ const Ranking = () => {
   const { uuid } = useSelector((state) => state.currencies);
   const { rankingQuery } = useSelector((state) => state.filter);
   const [page, setPage] = useState(0);
+  const [offset, setOffset] = useState(cryptoCount * page);
 
   const { data, isLoading, isError, error } = useGetCryptosQuery({
     cryptoCount,
     referenceCurrencyUuid: uuid,
-    offset: page,
+    offset,
     query: rankingQuery,
   });
 
-  //for hasMore
+  //
+  const handlePageChange = (value) => {
+    setPage(value);
+  };
+
+  //for pagination page
   useEffect(() => {
     if (data) {
       const totalCount = data?.data?.stats?.totalCoins || cryptoCount;
       const paginatePage = Math.ceil(totalCount / cryptoCount);
     }
   }, [data, cryptoCount]);
+
+  useEffect(() => {
+    setPage(0);
+  }, [rankingQuery]);
+
+  useEffect(() => {
+    setOffset(cryptoCount * page);
+  }, [page, cryptoCount]);
 
   let content;
 
@@ -70,10 +84,16 @@ const Ranking = () => {
 
       <div className="scrollbar-hide">{content}</div>
       <div className="flex items-center justify-center pt-10">
-        <Pagination totalPage={15}/>
+        <Pagination
+          totalPage={15}
+          handlePageChange={handlePageChange}
+          page={page}
+          loading={isLoading}
+        />
       </div>
     </div>
   );
 };
 
 export default Ranking;
+//hello, after dispatch search should be paginate active page 1
